@@ -29,7 +29,7 @@ function run_once(cmd)
      findme = cmd:sub(0, firstspace-1)
   end
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
- end 
+ end
 
 run_once("unclutter -idle 10")
 
@@ -125,20 +125,20 @@ if beautiful.wallpaper then
 end
 
 -- }}}
-                
+
 -- {{{ Tags
 
 -- Define a tag table which hold all screen tags.
 tags = {
-       names = { "web", "term", "docs", "media", "files", "other" },       
-       layout = { layouts[1], layouts[3], layouts[4], layouts[1], layouts[7], layouts[1] } 
+       names = { "web", "term", "docs", "media", "files", "other" },
+       layout = { layouts[1], layouts[3], layouts[4], layouts[1], layouts[7], layouts[1] }
        }
 for s = 1, screen.count() do
 -- Each screen has its own tag table.
    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
 -- }}}
-                                          
+
 -- {{{ Menu
 myaccessories = {
    { "archives", "7zFM" },
@@ -341,7 +341,7 @@ vicious.register(weatherwidget, vicious.widgets.weather,
 local infos = nil
 
 function remove_info()
-    if infos ~= nil then 
+    if infos ~= nil then
         naughty.destroy(infos)
         infos = nil
     end
@@ -491,7 +491,7 @@ vicious.register(mpdwidget, vicious.widgets.mpd,
 function(widget, args)
 	-- play
 	if (args["{state}"] == "Play") then
-		return red .. args["{Title}"] .. coldef .. colwhi .. " - " .. coldef .. colwhi  .. 
+		return red .. args["{Title}"] .. coldef .. colwhi .. " - " .. coldef .. colwhi  ..
 		args["{Artist}"] .. coldef
 	-- pause
 	elseif (args["{state}"] == "Pause") then
@@ -562,11 +562,11 @@ mytasklist.buttons = awful.util.table.join(
                                           end))
 
 for s = 1, screen.count() do
-    
+
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
 
-    
+
     -- We need one layoutbox per screen.
     mylayoutbox[s] = awful.widget.layoutbox(s)
     mylayoutbox[s]:buttons(awful.util.table.join(
@@ -582,9 +582,9 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the upper wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 20 }) 
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 20 })
     --border_width = 0, height =  20 })
-        
+
     -- Widgets that are aligned to the upper left
     local left_layout = wibox.layout.fixed.horizontal()
     --left_layout:add(spacer)
@@ -617,7 +617,7 @@ for s = 1, screen.count() do
     right_layout:add(spacer)
     right_layout:add(spacer)
     right_layout:add(uptimeicon)
-    right_layout:add(uptimewidget) 
+    right_layout:add(uptimewidget)
     right_layout:add(spacer)
     right_layout:add(weathericon)
     right_layout:add(weatherwidget)
@@ -627,7 +627,7 @@ for s = 1, screen.count() do
     right_layout:add(spacer)
     right_layout:add(mygmailimg)
     right_layout:add(mygmail)
-    right_layout:add(spacer)     
+    right_layout:add(spacer)
     right_layout:add(baticon)
     right_layout:add(batwidget)
     --right_layout:add(spacer)
@@ -640,22 +640,22 @@ for s = 1, screen.count() do
     layout:set_left(left_layout)
     --layout:set_middle(mytasklist[s])
     layout:set_right(right_layout)
-    
+
     mywibox[s]:set_widget(layout)
 
     -- Create the bottom wibox
     mybottomwibox[s] = awful.wibox({ position = "bottom", screen = s, border_width = 0, height = 20 })
     --mybottomwibox[s].visible = false
-            
+
     -- Widgets that are aligned to the bottom left
     bottom_left_layout = wibox.layout.fixed.horizontal()
     bottom_left_layout:add(spacer)
-                        
+
     -- Widgets that are aligned to the bottom right
     bottom_right_layout = wibox.layout.fixed.horizontal()
     bottom_right_layout:add(spacer)
     bottom_right_layout:add(mylayoutbox[s])
-                                            
+
     -- Now bring it all together (with the tasklist in the middle)
     bottom_layout = wibox.layout.align.horizontal()
     bottom_layout:set_left(bottom_left_layout)
@@ -739,7 +739,7 @@ globalkeys = awful.util.table.join(
 
     -- Dropdown terminal
     awful.key({ modkey,	          }, "z",     function () scratch.drop(terminal) end),
-    
+
     -- Volume control
     awful.key({ "Control" }, "Up", function ()
                                        awful.util.spawn("amixer set Master playback 1%+", false )
@@ -753,29 +753,29 @@ globalkeys = awful.util.table.join(
                                        awful.util.spawn("amixer set Master playback mute", false )
                                        vicious.force({ volumewidget })
                                      end),
-    awful.key({ "Control" }, "u", function () 
+    awful.key({ "Control" }, "u", function ()
                                       awful.util.spawn("amixer set Master playback unmute", false )
                                        vicious.force({ volumewidget })
                                   end),
-    awful.key({ altkey, "Control" }, "m", function () 
+    awful.key({ altkey, "Control" }, "m", function ()
                                               awful.util.spawn("amixer set Master playback 100%", false )
                                               vicious.force({ volumewidget })
                                           end),
 
     -- Music control
-    awful.key({ altkey, "Control" }, "Up", function () 
-                                              awful.util.spawn( "mpc toggle", false ) 
+    awful.key({ altkey, "Control" }, "Up", function ()
+                                              awful.util.spawn( "mpc toggle", false )
                                               vicious.force({ mpdwidget } )
                                            end),
-    awful.key({ altkey, "Control" }, "Down", function () 
-                                                awful.util.spawn( "mpc stop", false ) 
+    awful.key({ altkey, "Control" }, "Down", function ()
+                                                awful.util.spawn( "mpc stop", false )
                                                 vicious.force({ mpdwidget } )
                                              end ),
     awful.key({ altkey, "Control" }, "Left", function ()
                                                 awful.util.spawn( "mpc prev", false )
                                                 vicious.force({ mpdwidget } )
                                              end ),
-    awful.key({ altkey, "Control" }, "Right", function () 
+    awful.key({ altkey, "Control" }, "Right", function ()
                                                 awful.util.spawn( "mpc next", false )
                                                 vicious.force({ mpdwidget } )
                                               end ),
@@ -789,7 +789,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,        }, "s",      function () awful.util.spawn(gui_editor) end),
     awful.key({ modkey, 	     }, "t", 	    function () awful.util.spawn( "thunderbird", false ) end),
     awful.key({ modkey,        }, "d", 	    function () awful.util.spawn( "spacefm", false ) end),
-    
+
     -- Prompt
     awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end),
 
@@ -884,7 +884,7 @@ awful.rules.rules = {
 	                  size_hints_honor = false
                      }
     },
-   
+
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
 
@@ -900,7 +900,7 @@ awful.rules.rules = {
      	  properties = { tag = tags[1][3] } },
 
     { rule = { class = "Dia" },
-          properties = { tag = tags[1][4], 
+          properties = { tag = tags[1][4],
           floating = true } },
 
     { rule = { class = "Gimp" },
@@ -908,7 +908,7 @@ awful.rules.rules = {
           floating = true } },
 
     { rule = { class = "Inkscape" },
-          properties = { tag = tags[1][4] } },      
+          properties = { tag = tags[1][4] } },
 
     { rule = { class = "Rtorrent" },
           properties = { tag = tags[1][6] } },
