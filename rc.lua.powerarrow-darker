@@ -18,6 +18,8 @@ naughty         = require("naughty")
 vicious         = require("vicious")
 scratch         = require("scratch")
 
+local menubar = require("menubar")
+
 -- }}}
 
 -- {{{ Autostart
@@ -31,8 +33,10 @@ function run_once(cmd)
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
  end
 
-run_once("urxvtd")
-run_once("unclutter -idle 10")
+run_once("pidgin")
+run_once("hamster")
+run_once("xscreensaver")
+run_once("~/Documents/snippets/start_flux")
 
 -- }}}
 
@@ -44,7 +48,7 @@ os.setlocale(os.getenv("LANG"))
 
 -- {{{ Error Handling
 
--- Check if awesome encountered an error during startup and fell back to
+-- Check if awesome encountered an error during startup and fall back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -81,17 +85,14 @@ active_theme = themes .. "/powerarrow-darker"
 -- Themes define colours, icons, and wallpapers
 beautiful.init(active_theme .. "/theme.lua")
 
-terminal = "urxvtc"
+terminal = "terminator"
 editor = os.getenv("EDITOR")
---editor_cmd = terminal .. " -e " .. editor
-gui_editor = "geany -ps"
-browser = "dwb"
-browser2 = "midori"
-mail = terminal .. " -e mutt "
-chat = terminal .. " -e irssi "
-tasks = terminal .. " -e htop "
-iptraf = terminal .. " -g 180x54-20+34 -e sudo iptraf-ng -i all "
-musicplr = terminal .. " -g 130x34-320+16 -e ncmpcpp "
+gui_editor = terminal .. " --command vi "
+browser = "firefox"
+mail = " thunderbird "
+chat = terminal .. " --command irssi "
+tasks = terminal .. " --command htop "
+menubar.utils.terminal = terminal
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -141,52 +142,6 @@ for s = 1, screen.count() do
 -- Each screen has its own tag table.
    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
--- }}}
-
--- {{{ Menu
-myaccessories = {
-   { "archives", "7zFM" },
-   { "file manager", "spacefm" },
-   { "editor", gui_editor },
-}
-myinternet = {
-    { "browser", browser },
-    { "irc client" , chat },
-    { "torrent" , "rtorrent" },
-    { "torrtux" , terminal .. " -e torrtux " },
-    { "torrent search" , "torrent-search" }
-}
-mygames = {
-    { "NES", "fceux" },
-    { "Super NES", "zsnes" },
-}
-mygraphics = {
-    { "gimp" , "gimp" },
-    { "inkscape", "inkscape" },
-    { "dia", "dia" },
-    { "image viewer" , "viewnior" }
-}
-myoffice = {
-    { "writer" , "lowriter" },
-    { "impress" , "loimpress" },
-}
-mysystem = {
-    { "appearance" , "lxappearance" },
-    { "cleaning" , "bleachbit" },
-    { "powertop" , terminal .. " -e sudo powertop " },
-    { "task manager" , tasks }
-}
-mymainmenu = awful.menu({ items = {
-				    { "accessories" , myaccessories },
-				    { "graphics" , mygraphics },
-				    { "internet" , myinternet },
-				    { "games" , mygames },
-				    { "office" , myoffice },
-				    { "system" , mysystem },
-            }
-            })
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
 -- }}}
 
 -- {{{ Wibox
@@ -344,27 +299,27 @@ function (widget, args)
 end, 60)
 mygmail:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(mail, false) end)))
 
--- Music widget
-mpdwidget = wibox.widget.textbox()
-mpdicon = wibox.widget.imagebox()
-mpdicon:set_image(beautiful.widget_music)
-mpdicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicplr) end)))
+-- -- Music widget
+-- mpdwidget = wibox.widget.textbox()
+-- mpdicon = wibox.widget.imagebox()
+-- mpdicon:set_image(beautiful.widget_music)
+-- mpdicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(musicplr) end)))
 
-vicious.register(mpdwidget, vicious.widgets.mpd,
-function(widget, args)
-	-- play
-	if (args["{state}"] == "Play") then
-    mpdicon:set_image(beautiful.widget_music_on)
-		return "<span background='#313131' font='Terminus 13' rise='2000'> <span font='Terminus 9'>" .. red .. args["{Title}"] .. coldef .. colwhi .. " - " .. coldef .. colwhi  .. args["{Artist}"] .. coldef .. " </span></span>"
-	-- pause
-	elseif (args["{state}"] == "Pause") then
-    mpdicon:set_image(beautiful.widget_music)
-		return "<span background='#313131' font='Terminus 13' rise='2000'> <span font='Terminus 9'>" .. colwhi .. "mpd in pausa" .. coldef .. " </span></span>"
-	else
-    mpdicon:set_image(beautiful.widget_music)
-		return ""
-	end
-end, 1)
+-- vicious.register(mpdwidget, vicious.widgets.mpd,
+-- function(widget, args)
+-- 	-- play
+-- 	if (args["{state}"] == "Play") then
+--     mpdicon:set_image(beautiful.widget_music_on)
+-- 		return "<span background='#313131' font='Terminus 13' rise='2000'> <span font='Terminus 9'>" .. red .. args["{Title}"] .. coldef .. colwhi .. " - " .. coldef .. colwhi  .. args["{Artist}"] .. coldef .. " </span></span>"
+-- 	-- pause
+-- 	elseif (args["{state}"] == "Pause") then
+--     mpdicon:set_image(beautiful.widget_music)
+-- 		return "<span background='#313131' font='Terminus 13' rise='2000'> <span font='Terminus 9'>" .. colwhi .. "mpd in pausa" .. coldef .. " </span></span>"
+-- 	else
+--     mpdicon:set_image(beautiful.widget_music)
+-- 		return ""
+-- 	end
+-- end, 1)
 
 -- MEM widget
 memicon = wibox.widget.imagebox()
@@ -495,7 +450,7 @@ end, 1, "Master")
 
 -- Net widget
 netwidget = wibox.widget.textbox()
-vicious.register(netwidget, vicious.widgets.net, '<span background="#313131" font="Terminus 13" rise="2000"> <span font="Terminus 9" color="#7AC82E">${wlan0 down_kb}</span> <span font="Terminus 7" color="#EEDDDD">↓↑</span> <span font="Terminus 9" color="#46A8C3">${wlan0 up_kb} </span></span>', 3)
+vicious.register(netwidget, vicious.widgets.net, '<span background="#313131" font="Terminus 13" rise="2000"> <span font="Terminus 9" color="#7AC82E">${wlp2s0 down_kb}</span> <span font="Terminus 7" color="#EEDDDD">↓↑</span> <span font="Terminus 9" color="#46A8C3">${wlp2s0 up_kb} </span></span>', 3)
 neticon = wibox.widget.imagebox()
 neticon:set_image(beautiful.widget_net)
 netwidget:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn_with_shell(iptraf) end)))
@@ -596,8 +551,6 @@ for s = 1, screen.count() do
     right_layout:add(spr)
     right_layout:add(arrl)
     right_layout:add(arrl_ld)
-    right_layout:add(mpdicon)
-    right_layout:add(mpdwidget)
     right_layout:add(arrl_dl)
     right_layout:add(volicon)
     right_layout:add(volumewidget)
@@ -652,13 +605,16 @@ globalkeys = awful.util.table.join(
     -- Capture a screenshot
     awful.key({ altkey }, "p", function() awful.util.spawn("screenshot",false) end),
 
+    -- Show menubar
+    awful.key({ modkey }, "p", function() menubar.show() end),
+
     -- Move clients
     awful.key({ altkey }, "Next",  function () awful.client.moveresize( 1,  1, -2, -2) end),
     awful.key({ altkey }, "Prior", function () awful.client.moveresize(-1, -1,  2,  2) end),
     awful.key({ altkey }, "Down",  function () awful.client.moveresize(  0,  1,   0,   0) end),
     awful.key({ altkey }, "Up",    function () awful.client.moveresize(  0, -1,   0,   0) end),
-    awful.key({ altkey }, "Left",  function () awful.client.moveresize(-1,   0,   0,   0) end),
-    awful.key({ altkey }, "Right", function () awful.client.moveresize( 1,   0,   0,   0) end),
+--     awful.key({ altkey }, "Left",  function () awful.client.moveresize(-1,   0,   0,   0) end),
+--     awful.key({ altkey }, "Right", function () awful.client.moveresize( 1,   0,   0,   0) end),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
@@ -697,7 +653,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)     end),
+    -- awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)     end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)     end),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)       end),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)       end),
@@ -707,11 +663,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1)  end),
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
-    -- Dropdown terminal
-    awful.key({ modkey,	          }, "z",     function () scratch.drop(terminal) end),
-
-    -- Widgets popups
-    awful.key({ altkey,           }, "c",     function () add_calendar(7) end),
+    -- Screensaver
+    awful.key({ modkey }, "l", function() awful.util.spawn("xscreensaver-command -lock") end),
 
     -- Volume control
     awful.key({ "Control" }, "Up", function ()
@@ -735,36 +688,6 @@ globalkeys = awful.util.table.join(
                                               vicious.force({ volumewidget })
                                           end),
 
-    -- Music control
-    awful.key({ altkey, "Control" }, "Up", function ()
-                                              awful.util.spawn( "mpc toggle", false )
-                                              vicious.force({ mpdwidget } )
-                                           end),
-    awful.key({ altkey, "Control" }, "Down", function ()
-                                                awful.util.spawn( "mpc stop", false )
-                                                vicious.force({ mpdwidget } )
-                                             end ),
-    awful.key({ altkey, "Control" }, "Left", function ()
-                                                awful.util.spawn( "mpc prev", false )
-                                                vicious.force({ mpdwidget } )
-                                             end ),
-    awful.key({ altkey, "Control" }, "Right", function ()
-                                                awful.util.spawn( "mpc next", false )
-                                                vicious.force({ mpdwidget } )
-                                              end ),
-
-    -- Copy to clipboard
-    awful.key({ modkey,        }, "c",      function () os.execute("xsel -p -o | xsel -i -b") end),
-
-    -- User programs
-    awful.key({ modkey,        }, "q",      function () awful.util.spawn( "dwb", false ) end),
-    awful.key({ modkey,        }, "a",      function () awful.util.spawn( "midori", false ) end),
-    awful.key({ modkey,        }, "s",      function () awful.util.spawn(gui_editor) end),
-    awful.key({ modkey, 	     }, "t", 	    function () awful.util.spawn( "thunderbird", false ) end),
-    awful.key({ modkey,        }, "d", 	    function () awful.util.spawn( "spacefm", false ) end),
-
-    -- Prompt
-    awful.key({ modkey }, "r", function () mypromptbox[mouse.screen]:run() end),
 
     awful.key({ modkey }, "x",
               function ()

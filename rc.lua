@@ -33,12 +33,10 @@ function run_once(cmd)
   awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
  end
 
--- run_once("urxvtd")
--- run_once("unclutter -idle 10")
-
 run_once("pidgin")
 run_once("hamster")
 run_once("xscreensaver")
+run_once("~/Documents/snippets/start_flux")
 
 -- }}}
 
@@ -50,7 +48,7 @@ os.setlocale(os.getenv("LANG"))
 
 -- {{{ Error Handling
 
--- Check if awesome encountered an error during startup and fell back to
+-- Check if awesome encountered an error during startup and fall back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
@@ -615,8 +613,8 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey }, "Prior", function () awful.client.moveresize(-1, -1,  2,  2) end),
     awful.key({ altkey }, "Down",  function () awful.client.moveresize(  0,  1,   0,   0) end),
     awful.key({ altkey }, "Up",    function () awful.client.moveresize(  0, -1,   0,   0) end),
-    awful.key({ altkey }, "Left",  function () awful.client.moveresize(-1,   0,   0,   0) end),
-    awful.key({ altkey }, "Right", function () awful.client.moveresize( 1,   0,   0,   0) end),
+--     awful.key({ altkey }, "Left",  function () awful.client.moveresize(-1,   0,   0,   0) end),
+--     awful.key({ altkey }, "Right", function () awful.client.moveresize( 1,   0,   0,   0) end),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
