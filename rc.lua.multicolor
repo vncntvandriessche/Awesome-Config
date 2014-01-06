@@ -18,6 +18,8 @@ naughty         = require("naughty")
 vicious         = require("vicious")
 scratch         = require("scratch")
 
+local menubar = require("menubar")
+
 -- }}}
 
 -- {{{ Autostart
@@ -32,6 +34,9 @@ function run_once(cmd)
  end
 
 run_once("unclutter -idle 10")
+run_once("pidgin")
+run_once("hamster")
+run_once("xscreensaver")
 
 -- }}}
 
@@ -80,14 +85,13 @@ active_theme = themes .. "/multicolor"
 -- Themes define colours, icons, and wallpapers
 beautiful.init(active_theme .. "/theme.lua")
 
-terminal = "xterm"
+terminal = "terminator"
 editor = os.getenv("EDITOR")
 --editor_cmd = terminal .. " -e " .. editor
-gui_editor = "geany -ps"
-browser = "dwb"
-mail = terminal .. " -e mutt "
-chat = terminal .. " -e irssi "
-tasks = terminal .. " -e htop "
+mail = terminal .. " --command mutt "
+chat = terminal .. " --command irssi "
+tasks = terminal .. " -command htop "
+menubar.utils.terminal = terminal
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -469,12 +473,12 @@ netdownicon = wibox.widget.imagebox()
 netdownicon:set_image(beautiful.widget_netdown)
 netdownicon.align = "middle"
 netdowninfo = wibox.widget.textbox()
-vicious.register(netdowninfo, vicious.widgets.net, green .. "${wlan0 down_kb}" .. coldef, 1)
+vicious.register(netdowninfo, vicious.widgets.net, green .. "${wlp2s0 down_kb}" .. coldef, 1)
 netupicon = wibox.widget.imagebox()
 netupicon:set_image(beautiful.widget_netup)
 netupicon.align = "middle"
 netupinfo = wibox.widget.textbox()
-vicious.register(netupinfo, vicious.widgets.net, red .. "${wlan0 up_kb}" .. coldef, 1)
+vicious.register(netupinfo, vicious.widgets.net, red .. "${wlp2s0 up_kb}" .. coldef, 1)
 
 -- Memory widget
 memicon = wibox.widget.imagebox()
@@ -681,6 +685,9 @@ globalkeys = awful.util.table.join(
 
     -- Capture a screenshot
     awful.key({ altkey }, "p", function() awful.util.spawn("screenshot",false) end),
+
+    -- Show menubar
+    awful.key({ modkey }, "p", function() menubar.show() end),
 
     -- Move clients
     awful.key({ altkey }, "Next",  function () awful.client.moveresize( 1,  1, -2, -2) end),
