@@ -7,21 +7,13 @@
 
 -- Include the file that contains the required libraties
 require("rc.required_libraries")
-
-
--- {{{ Autostart
-
+-- Include the autostart script
 require("rc.autostart")
 
--- }}}
-
--- {{{ Localization
-
+-- Localization
 os.setlocale(os.getenv("LANG"))
 
--- }}}
-
--- {{{ Error Handling
+-- Include error Handling
 
 -- Check if awesome encountered an error during startup and fall back to
 -- another config (This code will only ever execute for the fallback config)
