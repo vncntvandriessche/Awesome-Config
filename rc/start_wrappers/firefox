@@ -1,0 +1,8 @@
+#!/bin/bash
+# Startonce wrapper script for xflux
+
+# Include the header script
+. $( dirname ${BASH_SOURCE[0]} )/header || exit 1;
+
+# Start firefox
+wrap /usr/bin/firefox;

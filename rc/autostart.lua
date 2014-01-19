@@ -2,18 +2,33 @@
 -- Autostart rules
 --------------------------------------------------------------------------------
 
--- The run_once function
-function run_once(cmd)
-  findme = cmd
-  firstspace = cmd:find(" ")
-  if firstspace then
-     findme = cmd:sub(0, firstspace-1)
-  end
-  awful.util.spawn_with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
-end
+-- The default path for startup scripts.
+start_wrappers = "~/.config/awesome/rc/start_wrappers/"
 
 -- -- The applications that need to be started at awesome launch
--- run_once("pidgin")
--- run_once("hamster")
--- run_once("xscreensaver")
--- run_once("~/Documents/snippets/start_flux")
+-- awful.util.spawn_with_shell(start_wrappers .. "nm-applet")
+-- naughty.notify({
+--         preset = naughty.config.presets.low,
+--         title = "Started application",
+--         text = "nm-applet"
+-- })
+
+awful.util.spawn_with_shell(start_wrappers .. 'xscreensaver')
+awful.util.spawn_with_shell(start_wrappers .. 'xflux')
+awful.util.spawn_with_shell(start_wrappers .. 'hamster')
+
+-- Start ssh tunnels and irssi client when ready
+awful.util.spawn_with_shell(start_wrappers .. 'ssh_tunnel')
+
+-- Start thunderbird client
+awful.util.spawn_with_shell(start_wrappers .. 'thunderbird')
+
+-- Start firefox
+awful.util.spawn_with_shell(start_wrappers .. 'firefox')
+
+-- Start keepassx client
+awful.util.spawn_with_shell(start_wrappers .. 'keepassx')
+
+-- Start irssi tunnel multiplex session
+awful.util.spawn_with_shell('sleep 2; ' .. start_wrappers .. 'irssi')
+

@@ -1,0 +1,13 @@
+#!/bin/bash
+# Startonce wrapper script for xflux
+
+# Include the needed delicate scripts
+. $( dirname ${BASH_SOURCE[0]} )/delicate/sockets || exit 1;
+
+# Specify the name where the persistent
+# ssh connections get written to
+ssh_connections='~/.ssh/connections';
+
+[ -S $ssh_connections/$home ] || ssh -f home -N;
+
+[ -S $ssh_connections/$proxy ] || ssh -f proxy -N;

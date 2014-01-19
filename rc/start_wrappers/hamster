@@ -1,0 +1,8 @@
+#!/bin/bash
+# Startonce wrapper script for hamster-timetracker
+
+# Include the header script
+. $( dirname ${BASH_SOURCE[0]} )/header || exit 1;
+
+# Start hamster
+wrap /usr/bin/hamster;

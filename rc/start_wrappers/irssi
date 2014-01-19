@@ -1,0 +1,11 @@
+#!/bin/bash
+# Startonce wrapper script for xflux
+
+# Include the needed delicate scripts
+. $( dirname ${BASH_SOURCE[0]} )/delicate/hosts || exit 1;
+
+# Include the header script
+. $( dirname ${BASH_SOURCE[0]} )/header || exit 1;
+
+# Start irssi client
+wrap /usr/bin/terminator --title 'irssi' --command="ssh -t $home_server -- tmux attach-session -t irssi"

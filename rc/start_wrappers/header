@@ -1,0 +1,43 @@
+#!/bin/bash
+# Header file for common operations/variables for all wrappers
+
+START_ONCE_PATH='/tmp/awesome/';
+PID_FILE="$START_ONCE_PATH$( basename $0; ).pid";
+
+# Try to create the path
+mkdir -vp $START_ONCE_PATH;
+
+# If the pid file allready exists, stop here
+[ -f $PID_FILE ] && exit 0;
+
+# Trap's here
+trap exit_handler EXIT;
+
+function exit_handler
+{
+        [ ! -f $PID_FILE ] && exit 0;
+        # Try to kill the process
+        kill $( cat $PID_FILE );
+        remove_pid_file -v;
+}
+
+function control_c
+{
+        echo 'Interrupted by user... cleaning up.';
+}
+
+function remove_pid_file
+{
+        rm $PID_FILE $@;
+}
+
+function monitor
+{
+        wait $( cat $PID_FILE );
+        remove_pid_file;
+}
+
+function wrap
+{
+        "$@" & echo $! | tee $PID_FILE && monitor;
+}
