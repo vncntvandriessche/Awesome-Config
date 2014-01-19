@@ -12,7 +12,9 @@ themes_dir                                  = os.getenv("HOME") .. "/.config/awe
 -- theme.wallpaper                             = themes_dir .. "/wall.png"
 theme.wallpaper                             = "~/Pictures/herp.jpg"
 
-theme.font                                  = "Terminus 9"
+-- theme.font                                  = "Terminus 9"
+-- theme.font                                  = "Dejavu Sans 10"
+theme.font                                  = "Andale Mono 8"
 theme.fg_normal                             = "#DCDCCC"
 theme.fg_focus                              = "#F0DFAF"
 theme.fg_urgent                             = "#CC9393"
