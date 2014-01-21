@@ -16,6 +16,7 @@ start_wrappers = "~/.config/awesome/rc/start_wrappers/"
 awful.util.spawn_with_shell(start_wrappers .. 'xscreensaver')
 awful.util.spawn_with_shell(start_wrappers .. 'xflux')
 awful.util.spawn_with_shell(start_wrappers .. 'hamster')
+awful.util.spawn_with_shell(start_wrappers .. 'wicd')
 
 -- Start ssh tunnels and irssi client when ready
 awful.util.spawn_with_shell(start_wrappers .. 'ssh_tunnel')
