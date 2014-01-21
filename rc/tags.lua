@@ -5,7 +5,7 @@
 -- Define a tag table which hold all screen tags.
 tags = {
         names  = { "Chat",     "Passw",    "Mail",     "Browse",   "5",        "6",        "7" },
-        layout = { layouts[6], layouts[4], layouts[3], layouts[6], layouts[6], layouts[6], layouts[6] }
+        layout = { layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2], layouts[2] }
 }
 
 -- Assign same tag table to all screens.

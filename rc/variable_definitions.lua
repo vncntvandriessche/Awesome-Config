@@ -24,6 +24,7 @@ altkey = "Mod1"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts = {
     awful.layout.suit.floating,
+    vain.layout.uselessfair,
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,

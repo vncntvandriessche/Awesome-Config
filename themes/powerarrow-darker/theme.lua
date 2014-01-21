@@ -81,6 +81,8 @@ theme.widget_mail_notify                    = themes_dir .. "/icons/mail_notify.
 
 theme.tasklist_floating                     = ""
 theme.tasklist_maximized_horizontal         = ""
-theme.tasklist_maximized_vertical           = "" 
+theme.tasklist_maximized_vertical           = ""
+
+theme.useless_gap_width = "50"
 
 return theme
