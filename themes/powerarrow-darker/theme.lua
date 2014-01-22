@@ -14,7 +14,7 @@ theme.wallpaper                             = "~/Pictures/herp.jpg"
 
 -- theme.font                                  = "Terminus 9"
 -- theme.font                                  = "Dejavu Sans 10"
-theme.font                                  = "Andale Mono 8"
+theme.font                                  = "Dejavu Sans Mono 8"
 theme.fg_normal                             = "#DCDCCC"
 theme.fg_focus                              = "#F0DFAF"
 theme.fg_urgent                             = "#CC9393"

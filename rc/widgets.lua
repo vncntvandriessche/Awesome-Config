@@ -3,14 +3,14 @@
 --------------------------------------------------------------------------------
 
 -- Colours
-coldef  = "</span>"
+coldef  = '</span>'
 colwhi  = "<span color='#b2b2b2'>"
 red = "<span color='#e54c62'>"
 
 -- Textclock widget
 clockicon = wibox.widget.imagebox()
 clockicon:set_image(beautiful.widget_clock)
-mytextclock = awful.widget.textclock("<span font=\"Andale Mono 8\"><span font=\"Andale Mono 8\" color=\"#DDDDFF\"> %a %d %b  %H:%M</span></span>")
+mytextclock = awful.widget.textclock('<span font="Dejavu Sans Mono 8"> %a %d %b  %H:%M</span>')
 
 -- Calendar attached to the textclock
 local os = os
@@ -119,28 +119,6 @@ mytextclock:connect_signal("mouse::leave", hide)
 mytextclock:buttons(util.table.join( awful.button({ }, 1, function() show(-1) end),
 awful.button({ }, 3, function() show(1) end)))
 
--- MEM widget
-memicon = wibox.widget.imagebox()
-memicon:set_image(beautiful.widget_mem)
-memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, ' $2MB ', 13)
-
--- CPU widget
-cpuicon = wibox.widget.imagebox()
-cpuicon:set_image(beautiful.widget_cpu)
-cpuwidget = wibox.widget.textbox()
-vicious.register(cpuwidget, vicious.widgets.cpu, '<span background="#313131" font="Andale Mono 8" rise="2000"> <span font="Andale Mono 8">$1% </span></span>', 3)
-cpuicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(tasks, false) end)))
-
--- Temp widget
-tempicon = wibox.widget.imagebox()
-tempicon:set_image(beautiful.widget_temp)
-tempicon:buttons(awful.util.table.join(awful.button({ }, 1, function () awful.util.spawn(terminal .. " -e sudo powertop ", false) end)))
-tempwidget = wibox.widget.textbox()
-vicious.register(tempwidget, vicious.widgets.thermal, '<span font="Andale Mono 8"> <span font="Andale Mono 8">$1°C </span></span>', 9, {"coretemp.0", "core"} )
-
-
-
 local infos = nil
 
 function remove_info()
@@ -159,7 +137,7 @@ function add_info()
         local cal = awful.util.pread(scriptdir .. "dfs")
         cal = string.gsub(cal, "          ^%s*(.-)%s*$", "%1")
         infos = naughty.notify({
-                text = string.format('<span font_desc="%s">%s</span>', "Andale Mono", cal),
+                text = string.format('<span font_desc="%s">%s</span>', 'Dejavu Sans Mono', cal),
                 timeout = 0,
                 position = "top_right",
                 margin = 10,
@@ -176,19 +154,19 @@ baticon:set_image(beautiful.widget_battery)
 
 function batstate()
 
-        local file = io.open("/sys/class/power_supply/BAT0/status", "r")
+        local file = io.open('/sys/class/power_supply/BAT0/status', 'r')
 
         if (file == nil) then
-                return "Cable plugged"
+                return 'Cable plugged'
         end
 
-        local batstate = file:read("*line")
+        local batstate = file:read('*line')
         file:close()
 
         if (batstate == 'Discharging' or batstate == 'Charging') then
                 return batstate
         else
-                return "Fully charged"
+                return 'Fully charged'
         end
 end
 
@@ -198,7 +176,7 @@ function (widget, args)
         -- plugged
         if (batstate() == 'Cable plugged') then
                 baticon:set_image(beautiful.widget_ac)
-                return '<span font="Andale Mono 8"> <span font="Andale Mono 8">AC </span></span>'
+                return '<span font="Dejavu Sans Mono 8">AC </span>'
                 -- critical
         elseif (args[2] <= 5 and batstate() == 'Discharging') then
                 baticon:set_image(beautiful.widget_battery_empty)
@@ -227,7 +205,7 @@ function (widget, args)
                 })
         else baticon:set_image(beautiful.widget_battery)
         end
-        return '<span font="Andale Mono 8"> <span font="Andale Mono 8">' .. args[2] .. '% </span></span>'
+        return '<span font="Dejavu Sans Mono 8">' .. args[2] .. '% </span>'
 end, 1, 'BAT0')
 
 -- Volume widget
@@ -244,16 +222,14 @@ function (widget, args)
         else volicon:set_image(beautiful.widget_vol_mute)
         end
 
-        return '<span background="#313131" font="Andale Mono 8"> <span font="Andale Mono 8">' .. args[1] .. '% </span></span>'
+        return '<span font="Dejavu Sans Mono 8">' .. args[1] .. '% </span>'
 end, 1, "Master")
 
 -- Separators
-spr = wibox.widget.textbox(' ')
+spr = wibox.widget.textbox(' | ')
 arrl = wibox.widget.imagebox()
 arrl:set_image(beautiful.arrl)
 arrl_dl = wibox.widget.imagebox()
 arrl_dl:set_image(beautiful.arrl_dl)
 arrl_ld = wibox.widget.imagebox()
 arrl_ld:set_image(beautiful.arrl_ld)
-
-
