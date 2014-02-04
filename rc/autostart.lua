@@ -2,34 +2,45 @@
 -- Autostart rules
 --------------------------------------------------------------------------------
 
--- The default path for startup scripts.
-start_wrappers = "~/.config/awesome/rc/start_wrappers/"
+function start_application ( script, show, name )
+
+        -- The default path for startup scripts.
+        -- TODO: Get this from a centralized configuration file
+        start_wrappers = "~/.config/awesome/rc/start_wrappers/"
+
+        show = show or true
+        name = name or string.gsub( script, start_wrappers, '' )
+
+        awful.util.spawn_with_shell( script )
+
+        if show == false then
+                return
+        end
+
+        naughty.notify({
+                preset = naughty.config.presets.low,
+                title = "Started application",
+                text = name,
+        })
+end
 
 -- -- The applications that need to be started at awesome launch
--- awful.util.spawn_with_shell(start_wrappers .. "nm-applet")
--- naughty.notify({
---         preset = naughty.config.presets.low,
---         title = "Started application",
---         text = "nm-applet"
--- })
-
-awful.util.spawn_with_shell(start_wrappers .. 'xscreensaver')
-awful.util.spawn_with_shell(start_wrappers .. 'xflux')
-awful.util.spawn_with_shell(start_wrappers .. 'hamster')
-awful.util.spawn_with_shell(start_wrappers .. 'wicd')
+start_application( start_wrappers .. 'xscreensaver' )
+start_application( start_wrappers .. 'xflux' )
+start_application( start_wrappers .. 'hamster' )
+start_application( start_wrappers .. 'wicd' )
 
 -- Start ssh tunnels and irssi client when ready
-awful.util.spawn_with_shell(start_wrappers .. 'ssh_tunnel')
+start_application( start_wrappers .. 'ssh_tunnel' )
 
 -- Start thunderbird client
-awful.util.spawn_with_shell(start_wrappers .. 'thunderbird')
+start_application( start_wrappers .. 'thunderbird' )
 
 -- Start firefox
-awful.util.spawn_with_shell(start_wrappers .. 'firefox')
+start_application( start_wrappers .. 'firefox' )
 
 -- Start keepassx client
-awful.util.spawn_with_shell(start_wrappers .. 'keepassx')
+start_application( start_wrappers .. 'keepassx' )
 
 -- Start irssi tunnel multiplex session
-awful.util.spawn_with_shell('sleep 2; ' .. start_wrappers .. 'irssi')
-
+start_application( 'sleep 2; ' .. start_wrappers .. 'irssi', false, 'Ssh tunnels' )
