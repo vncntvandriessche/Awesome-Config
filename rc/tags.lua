@@ -11,5 +11,5 @@ tags = {
 -- Assign same tag table to all screens.
 for s = 1, screen.count() do
         -- Each screen has its own tag table.
-        tags[s] = awful.tag(tags.names, s, tags.layout)
+        tags[s] = awful.tag( tags.names, s, tags.layout )
 end
