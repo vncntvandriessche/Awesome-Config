@@ -8,5 +8,5 @@ if not beautiful.wallpaper then
 end
 
 for s = 1, screen.count() do
-    gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+    gears.wallpaper.maximized( beautiful.wallpaper, s, true )
 end
