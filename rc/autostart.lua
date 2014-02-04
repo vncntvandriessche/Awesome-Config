@@ -11,7 +11,7 @@ function start_application ( script, show, name )
         show = show or true
         name = name or string.gsub( script, start_wrappers, '' )
 
-        awful.util.spawn_with_shell( script )
+        awful.util.spawn_with_shell( start_wrappers .. script )
 
         if show == false then
                 return
@@ -25,22 +25,22 @@ function start_application ( script, show, name )
 end
 
 -- -- The applications that need to be started at awesome launch
-start_application( start_wrappers .. 'xscreensaver' )
-start_application( start_wrappers .. 'xflux' )
-start_application( start_wrappers .. 'hamster' )
-start_application( start_wrappers .. 'wicd' )
+start_application( 'xscreensaver' )
+start_application( 'xflux' )
+start_application( 'hamster' )
+start_application( 'wicd' )
 
 -- Start ssh tunnels and irssi client when ready
-start_application( start_wrappers .. 'ssh_tunnel' )
+start_application( 'ssh_tunnel' )
 
 -- Start thunderbird client
-start_application( start_wrappers .. 'thunderbird' )
+start_application( 'thunderbird' )
 
 -- Start firefox
-start_application( start_wrappers .. 'firefox' )
+start_application( 'firefox' )
 
 -- Start keepassx client
-start_application( start_wrappers .. 'keepassx' )
+start_application( 'keepassx' )
 
 -- Start irssi tunnel multiplex session
-start_application( 'sleep 2; ' .. start_wrappers .. 'irssi', false, 'Ssh tunnels' )
+start_application( 'irssi', false, 'Ssh tunnels' )

@@ -8,4 +8,5 @@
 . $( dirname ${BASH_SOURCE[0]} )/header || exit 1;
 
 # Start irssi client
+sleep 2;
 wrap /usr/bin/terminator --title 'irssi' --command="ssh -t $home_server -- tmux attach-session -t irssi"
