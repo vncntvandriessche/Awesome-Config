@@ -2,11 +2,6 @@
 -- Create widgets
 --------------------------------------------------------------------------------
 
--- Colours
-coldef  = '</span>'
-colwhi  = "<span color='#b2b2b2'>"
-red = "<span color='#e54c62'>"
-
 -- Textclock widget
 clockicon = wibox.widget.imagebox()
 clockicon:set_image(beautiful.widget_clock)
